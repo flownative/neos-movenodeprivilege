@@ -1,0 +1,14 @@
+{
+    "name": "flownative/neos-movenodeprivilege",
+    "type": "neos-package",
+    "description": "A node privilege to restrict moving of nodes",
+    "license": "MIT",
+    "require": {
+        "neos/flow": "^4.0 || dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Flownative\\Neos\\MoveNodePrivilege\\": "Classes"
+        }
+    }
+}

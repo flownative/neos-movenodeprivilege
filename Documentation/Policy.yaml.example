@@ -1,0 +1,24 @@
+privilegeTargets:
+  'Flownative\Neos\MoveNodePrivilege\Security\Authorization\Privilege\Node\MoveNodePrivilege':
+    # this privilegeTarget is defined to switch to a "whitelist" approach
+    'Acme.Com:MoveAllNodes':
+      matcher: 'TRUE'
+
+    'Acme.Com:MoveSpecificNodes':
+      matcher: 'nodeIsOfType("Acme.Com:SpecialNodeType")'
+
+roles:
+
+  'Neos.Neos:Editor':
+    privileges:
+      -
+        # Allow to move all nodes
+        privilegeTarget: 'Acme.Com:MoveAllNodes'
+        permission: GRANT
+
+  'Neos.Neos:RestrictedEditor':
+    privileges:
+    -
+      # These must only move specific nodes
+      privilegeTarget: 'Acme.Com:MoveSpecificNodes'
+      permission: GRANT
