@@ -36,7 +36,7 @@ class MoveNodePrivilege extends AbstractNodePrivilege
         }
 
         if ($subject instanceof MethodPrivilegeSubject === true) {
-            $this->initializeMethodPrivilege();
+            $this->initialize();
             if ($this->methodPrivilege->matchesSubject($subject) === false) {
                 return false;
             }
