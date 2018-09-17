@@ -41,6 +41,21 @@ class MoveNodePrivilege extends AbstractNodePrivilege
                 return false;
             }
 
+            // check for "pure" move operation, because sadly other operations also involve a move:
+            // - CreateBefore, CreatAfter -> apply()
+            // - Node(Interface) -> copyBefore, copyAfter
+            // - NodeOperations -> create
+            $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 10);
+            foreach ($backtrace as $item) {
+                if (
+                    ($item['function'] === 'apply' && (strpos($item['class'], 'Neos\Neos\Ui\Domain\Model\Changes\CreateAfter') === 0 || strpos($item['class'], 'Neos\Neos\Ui\Domain\Model\Changes\CreateBefore') === 0))
+                    || ($item['function'] === 'create' && strpos($item['class'], 'Neos\Neos\Service\NodeOperations') === 0)
+                    || (strpos($item['class'], 'Neos\ContentRepository\Domain\Model\Node') === 0 && ($item['function'] === 'copyBefore' || $item['function'] === 'copyAfter'))
+                ) {
+                    return false;
+                }
+            }
+
             /** @var NodeInterface $node */
             $node = $subject->getJoinPoint()->getProxy();
             $nodePrivilegeSubject = new NodePrivilegeSubject($node);
