@@ -45,7 +45,7 @@ class MoveNodePrivilege extends AbstractNodePrivilege
             // - CreateBefore, CreatAfter -> apply()
             // - Node(Interface) -> copyBefore, copyAfter
             // - NodeOperations -> create
-            $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 10);
+            $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 15);
             foreach ($backtrace as $item) {
                 if (isset($item['class'])) {
                     if (
