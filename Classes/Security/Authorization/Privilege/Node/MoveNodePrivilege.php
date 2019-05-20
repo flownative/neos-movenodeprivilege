@@ -45,14 +45,16 @@ class MoveNodePrivilege extends AbstractNodePrivilege
             // - CreateBefore, CreatAfter -> apply()
             // - Node(Interface) -> copyBefore, copyAfter
             // - NodeOperations -> create
-            $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 10);
+            $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 15);
             foreach ($backtrace as $item) {
-                if (
-                    ($item['function'] === 'apply' && (strpos($item['class'], 'Neos\Neos\Ui\Domain\Model\Changes\CreateAfter') === 0 || strpos($item['class'], 'Neos\Neos\Ui\Domain\Model\Changes\CreateBefore') === 0))
-                    || ($item['function'] === 'create' && strpos($item['class'], 'Neos\Neos\Service\NodeOperations') === 0)
-                    || (strpos($item['class'], 'Neos\ContentRepository\Domain\Model\Node') === 0 && ($item['function'] === 'copyBefore' || $item['function'] === 'copyAfter'))
-                ) {
-                    return false;
+                if (isset($item['class'])) {
+                    if (
+                        ($item['function'] === 'apply' && (strpos($item['class'], 'Neos\Neos\Ui\Domain\Model\Changes\CreateAfter') === 0 || strpos($item['class'], 'Neos\Neos\Ui\Domain\Model\Changes\CreateBefore') === 0))
+                        || ($item['function'] === 'create' && strpos($item['class'], 'Neos\Neos\Service\NodeOperations') === 0)
+                        || (strpos($item['class'], 'Neos\ContentRepository\Domain\Model\Node') === 0 && ($item['function'] === 'copyBefore' || $item['function'] === 'copyAfter'))
+                    ) {
+                        return false;
+                    }
                 }
             }
 
