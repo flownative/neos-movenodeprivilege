@@ -4,7 +4,7 @@
     "description": "A node privilege to restrict moving of nodes",
     "license": "MIT",
     "require": {
-        "neos/flow": "^3.3 || ^4.0 || dev-master"
+        "neos/flow": "^3.3 || ^4.0 || ^5.0 || dev-master"
     },
     "autoload": {
         "psr-4": {
